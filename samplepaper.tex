@@ -169,10 +169,55 @@ above the c_{pr} in period p for resource r.
 
 % Again this is not the way that we want it to be. We should change it up... I think that drafting it is a good idea. We should mention the 
 
-\subsection{Continuous Optimization}
-To allow for continuous optimization we will adopt a 
+\subsection{User interaction}
+User interaction is crucial for allowing the models to provide usable and implementable schedules. This aspect touches 
+on a fundamental aspect of scheduling model in maintenance. While it is unlikely that a model will generate
+an implementable schedule, due to the numerous technical and human aspects found in the scheduling process
+itself, this does not mean that the solution space which a model creates and based on it provides solutions does not 
+provide considerable value. So here we are faced with a problem, on the one hand it is difficult to generate implementable
+schedules but on the other hand constraining the schedules is valuable. To solve this problem this paper proposes
+a metaheuristic that is designed to continually provide schedules to the scheduler, while also accepting input from the scheduler
+to adjust for any unforseen job or other unknowables that the model cannot take into account.
 
-\subsection{User input}
+The metaheuristic is here called \textbf{Actor based Large Neighborhood Search} and it is a extension of the 
+Large Neighborhood Metaheuristic. Which can be seen in algorithm (!) 
+
+
+
+\begin{algorithm}[H]
+\caption{Actor-based large neighborhood search}\label{algo1}
+\begin{algorithmic}[1]
+\State \textbf{Input} M = message queue
+\State \textbf{Input} schedule = initial/empty schedule
+\While{true} 
+    \\
+    \While{!M.is\_empty()}
+        \State m = M.pop()
+        \State schedule.update\_schedule(m)
+        \State best\_schedule.update\_schedule(m)
+    \EndWhile
+    \\
+    \State schedule$^t$ = construct(destruct(schedule))
+    \If{accept(schedule$^t$,\ schedule)} \label{alg:acceptance_criteria_start}
+        \State schedule = schedule$^t$
+    \EndIf \label{alg:acceptance_criteria_end}
+    \\
+    \If{C(schedule$^t$) $<$ C(best\_schedule)}
+    \label{alg:objective_start}
+        \State best\_schedule $=$ schedule$^t$
+    \EndIf \label{alg:objective_end}
+    \\
+    \If{best\_schedule.state\_change()} \label{alg:state_change_start}
+        \State best\_schedule.send\_message()
+    \EndIf \label{alg:state_change_end}
+\EndWhile
+\end{algorithmic}
+\end{algorithm}
+
+
+\subsection{Continuous Optimization}
+To allow for continuous optimization we will adopt a
+
 
 
 % We should get to the point faster. I want to be more humble, the reader should make his own conclusion as to the usefullness of the approaches highlighted. 
