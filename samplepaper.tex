@@ -96,11 +96,38 @@ The strategic schedule has three main goals.
     \item creation of a stable and unique schedule
 \end{itemize}
 
+To achieve these goals within the additional requirements of reactivity and interactivity while also being scalable for problem instances containing up to 10000 jobs (~20000 activities). The maintenance scheduling problem
+is formulated as a multi-compartment multi-knapsack knapsack problem (MCMKKP). This model has been carefully chosen to give some desirable model characteristics which the RCPSP lacks either directly or indirectly. 
+First, getting a stable and unique schedule with 20000 activities in a RCPSP is extremely challenging as the problem is NP-complete with the RCPSP you will have a variable 
+for each \textbf{day} and for each \textbf{activity} with corresponding constraints, where for the MCMKKP we only have to variable for each \textbf{peried} and \textbf{job}. This of course simplifies the problem considerably
+but it also provides a new characteristic that is crucial for a long term maintenance schedule. This is the property of allowing for gradual reduction in the resource capacity through out the periods. Modifing the RCPSP to get
+this property is not trivial as it requires that jobs and activities should be handled differently based of the period they are scheduled in. Besides being difficult it also alters the interpretation of the problem
+in an undesirable way by assigning scheduling a job and its activities differently depending on when in the schedule it is placed. Given this justification we will move on to explaining the model itself. 
+
+
+The first model is the strategic model. The model is comprised of five different sets. Here: p
+is the number of periods; o is the number of work
+orders; R is the number of resources, Q is a
+set which defines the work orders which should
+be excluded from a specific period; P is an inclu-
+sion set that defines the work orders which should
+be included in each period. The model introduces
+four different parameters. Here: v_{ij}is the value
+associated with work order o in period p; $penalty$ paid for exceeding the work center capac-
+ity; wjk is the capacity needed for work order o
+by work center k; cik total amount of capacity
+available in period i for work center k. As for the
+decision-variables, here: xij is a binary decision-
+variable equal to one if work order i is in period
+j and zero otherwise; pik is non-negative decision
+variable equal to the amount of excess capacity
+above the cik in period i for work center k.
+
 
 \begin{alignat}{2}
     &\text{Min} \quad \sum_{p = 1}^{P} \sum_{o = 1}^{O} cost_{po} \cdot x_{po} - \sum_{p = 1}^{P} \sum_{r = 1}^R penalty \cdot excess_{pr} \label{eqn:objective_function_strategic} \\[1em]
     &\text{subject to:} \notag\\[1em]
-    &\sum_{o=1}^m w_{or} \cdot x_{po} \leq \ c_{pr} + p_{pr} \quad  &&\forall p \in \{1..P\}, \forall r \in \{1..R\}\label{eqn:capacity_constraint} \\[1em]
+    &\sum_{o=1}^m w_{or} \cdot x_{po} \leq \ c_{pr} + p_{pr} \quad  && \forall p \in \{1..P\}, \forall r \in \{1..R\}\label{eqn:capacity_constraint} \\[1em]
     &\sum_{p = 1}^{P} x_{po} \leq \ 1 \quad                         && \forall o \in \{1..O\}   \label{eqn:single_workorder_constraint}\\[1em]
     &x_{po} = 0                                                     && \forall (p, o) \in Q \quad  \label{eqn:exclusion_constraint} \\[1em]
     &x_{po} = 1                                                     && \forall (p, o) \in P \quad  \label{eqn:inclusion_constraint}\\[1em]
@@ -110,12 +137,7 @@ The strategic schedule has three main goals.
     &&&\forall r \in \{1..R\}                  \label{eqn:p_non_negativity_constraint}
 \end{alignat}
 
-
-
-
-
 \subsubsection{The Tactical Model}
-
 
 \begin{alignat}{2} 
 & \min && \sum_{o \in O} \omega_o \cdot T_o + \sum_{wc \in WC, d \in D} \lambda \cdot s_{wc,d} \label{eqn:tactical_objective}
@@ -145,9 +167,6 @@ The strategic schedule has three main goals.
     &\mu_k \in [0,1]                                                                            \ \ && \forall k \in K                              \label{eqn:tactical_finish_start_difference} \\[1em]
     &s_{wc,d} \in \mathbb{R}^{+}                                                                \ \ && \forall wc \in WC, \forall d \in D           \label{eqn:tactical_excess_capacity_variable}  
 \end{alignat}
-
-
-
 
 % Again this is not the way that we want it to be. We should change it up... I think that drafting it is a good idea. We should mention the 
 
