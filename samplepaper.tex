@@ -105,23 +105,22 @@ this property is not trivial as it requires that jobs and activities should be h
 in an undesirable way by assigning scheduling a job and its activities differently depending on when in the schedule it is placed. Given this justification we will move on to explaining the model itself. 
 
 
-The first model is the strategic model. The model is comprised of five different sets. Here: p
-is the number of periods; o is the number of work
+The first model is the strategic model. The model is comprised of five different sets. Here: P
+is the number of periods; O is the number of work
 orders; R is the number of resources, Q is a
 set which defines the work orders which should
 be excluded from a specific period; P is an inclu-
 sion set that defines the work orders which should
 be included in each period. The model introduces
-four different parameters. Here: v_{ij}is the value
-associated with work order o in period p; $penalty$ paid for exceeding the work center capac-
-ity; wjk is the capacity needed for work order o
-by work center k; cik total amount of capacity
-available in period i for work center k. As for the
-decision-variables, here: xij is a binary decision-
-variable equal to one if work order i is in period
-j and zero otherwise; pik is non-negative decision
+four different parameters. Here: v_{po}is the value
+associated with work order o in period p; $penalty$ paid for exceeding the resource capacity; w_{or} is the capacity needed for work order o
+by resource r; c_{pr} amount of capacity
+available in period p for resource r. As for the
+decision-variables, here: x_{po} is a binary decision-
+variable equal to one if work order o is in period
+p and zero otherwise; p_{pr} is non-negative decision
 variable equal to the amount of excess capacity
-above the cik in period i for work center k.
+above the c_{pr} in period p for resource r.
 
 
 \begin{alignat}{2}
