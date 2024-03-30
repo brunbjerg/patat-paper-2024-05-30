@@ -214,13 +214,50 @@ Large Neighborhood Metaheuristic. Which can be seen in algorithm (!)
 \end{algorithmic}
 \end{algorithm}
 
+The algorithm allows us to change the underlying parameter space of the implemented metaheuristic
+in real-time. In practice this means that the schedule will always be able to change to new information
+coming into the system, and the metaheuristic will adapt to new parameter space by finding a new solution. 
+This also highlight the key reason behind the choice of the large neighborhood search meta-heuristic as it
+has as an intrinsic part of its implementation the ability to fix infeasible solutions which is an essential
+properity to have when the paraspace space is subject to change. 
 
 \subsection{Continuous Optimization}
-To allow for continuous optimization we will adopt a
+The idea of having a single model running continuously may not seem to produce a lot of 
+value and this is partly correct, in practice a model may only need to be 
+run a couple of times per week in a practical setting making it run in real-time 
+look a little excessive. But where this approach starts gaining value is when we 
+consider a multi-process setup where each process would ideally be allowed to change
+independently of each other in an asynchronuos fashion, but in a practical setting is 
+unable to as the multi-process coordination is based on physical meetings. By having 
+continuous optimization it becomes possible for processes to handle changes in the parameter
+space as they occur and the process experiencing the change will be able to optimize around
+it and communicate the new solution to its neighboring processes. This idea is illustrated 
+in Figure \ref{:model-interplay} 
+
+
+
+\begin{figure}
+\includegraphics[width=\textwidth]{figures/patat-small-architecture-example.png}
+\caption{A figure caption is always placed below the illustration.
+Please note that short captions are centered, while long ones are
+justified by the macro package automatically.} \label{:model-interplay}
+\end{figure}
 
 
 
 % We should get to the point faster. I want to be more humble, the reader should make his own conclusion as to the usefullness of the approaches highlighted. 
+
+
+
+\section{Results}
+
+
+\section{Future Research}
+The project is quite extensive and requires collaboratos that have a solid foundation in both
+operation research and programming. Future succes of the project will depend heavily on correct
+implementaion of the multi-agent system that underlies the model interactions. Future research 
+will 
+
 
 \subsubsection{Sample Heading (Third Level)} Only two levels of
 headings should be numbered. Lower level headings remain unnumbered;
